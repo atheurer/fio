@@ -1,49 +1,71 @@
 {
-    "targets": {
-	"default": {
-	    "packages": [
-		"libaio_src",
-		"fio_src"
-	    ]
-	}
+    "workshop": {
+        "schema": {
+            "version": "2020.03.02"
+        }
     },
-    "packages": {
-	"libaio-devel": {
-	    "type": "distro",
-	    "distro_info": {
-		"pkg_name": "libaio-devel"
+    "userenvs": [
+	    {
+	        "name": "default",
+	        "requirements": [
+            "zlib_src",
+		    "libaio_src",
+		    "fio_src"
+	        ]
 	    }
-	},
-	"libaio_src": {
-	    "type": "source",
-	    "source_info": {
-		"url": "https://pagure.io/libaio/archive/libaio-0.3.111/libaio-libaio-0.3.111.tar.gz",
-		"filename": "libaio.tar.gz",
-		"commands": {
-		    "unpack": "tar -xzf libaio.tar.gz",
-		    "get_dir": "tar -tzf libaio.tar.gz | head -n 1",
-		    "build": [
-			"make prefix=/usr install"
-		    ]
-		}
-	    }
-	},
-	"fio_src": {
-	    "type": "source",
-	    "source_info": {
-		"url": "https://github.com/axboe/fio/archive/fio-3.18.tar.gz",
-		"filename": "fio.tar.gz",
-		"commands": {
-		    "unpack": "tar -xzf fio.tar.gz",
-		    "get_dir": "tar -tzf fio.tar.gz | head -n 1",
-		    "build": [
-			"./configure",
-			"make",
-			"make install",
-			"fio --version"
-		    ]
-		}
-	    }
-	}
-    }
+    ],
+    "requirements": [
+	    {
+	        "name": "libaio_src",
+	        "type": "source",
+	        "source_info": {
+		        "url": "https://pagure.io/libaio/archive/libaio-0.3.111/libaio-libaio-0.3.111.tar.gz",
+		        "filename": "libaio.tar.gz",
+		        "commands": {
+                    "unpack": "tar -xzf libaio.tar.gz",
+		            "get_dir": "tar -tzf libaio.tar.gz | head -n 1",
+                    "commands": [
+			            "make prefix=/usr install"
+                    ]
+                }
+	        }
+        },
+        {
+            "name": "zlib_src",
+            "type": "source",
+            "source_info": {
+                "url": "https://www.zlib.net/zlib-1.2.11.tar.gz",
+                "filename": "zlib.tar.gz",
+                "commands": {
+                    "unpack": "tar -xzf zlib.tar.gz",
+                    "get_dir": "tar -tzf zlib.tar.gz | head -n 1",
+                    "commands": [
+                        "./configure",
+                        "make",
+                        "make prefix=/usr install",
+                        "ldconfig"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "fio_src",
+            "type": "source",
+            "source_info": {
+                "url": "https://github.com/axboe/fio/archive/fio-3.18.tar.gz",
+                "filename": "fio.tar.gz",
+                "commands": {
+                    "unpack": "tar -xzf fio.tar.gz",
+                    "get_dir": "tar -tzf fio.tar.gz | head -n 1",
+                    "commands": [
+                        "./configure",
+                        "make",
+                        "make install",
+                        "ldconfig",
+                        "fio --version"
+                    ]
+                }
+            }
+        }
+    ]
 }
